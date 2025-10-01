@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rey’s 1st Birthday 🎂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Sacramento&display=swap" rel="stylesheet">
+  <style>
+    /* Fonts */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fff5f5, #fff);
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    h1, .script { font-family: 'Sacramento', cursive; }
+
+    /* Balloon design */
+    .balloon {
+      position: fixed;
+      bottom: 10px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50% 50% 45% 55%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8), transparent 40%), var(--color);
+      box-shadow: inset -5px -10px 15px rgba(0,0,0,0.15);
+      z-index: 1;
+
+      /* Combined animations */
+      animation: floatAndDrift 14s linear infinite;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      width: 2px;
+      height: 80px;
+      background: rgba(0,0,0,0.2);
+    }
+
+@keyframes floatAndDrift {
+  0%   { transform: translateX(0px) translateY(0vh) scale(1); }
+  25%  { transform: translateX(15px) translateY(-25vh) scale(1.05); }
+  50%  { transform: translateX(-10px) translateY(-50vh) scale(0.95); }
+  75%  { transform: translateX(20px) translateY(-75vh) scale(1.05); }
+  100% { transform: translateX(0px) translateY(-100vh) scale(1.1); }
+}
+
+    @keyframes floatUp {
+      0%   { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-100vh) scale(1.1); }
+    }
+
+    @keyframes drift {
+      0% { transform: translateX(0) scale(1); }
+      50% { transform: translateX(15px) scale(1.05); }
+      100% { transform: translateX(-10px) scale(0.95); }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      opacity: 0.7;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0); }
+      100% { transform: translateY(100vh) rotate(720deg); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      h1 { font-size: 4rem; }
+      .hero-photo { width: 10rem; height: 10rem; }
+      .event-details { padding: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 3rem; }
+      .hero-photo { width: 8rem; height: 8rem; }
+      .event-details { padding: 1rem; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center text-center px-4">
+
+  <!-- Floating balloons & confetti -->
+  <div id="balloons"></div>
+  <div id="confetti"></div>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 py-16 max-w-lg w-full mx-auto flex flex-col items-center">
+    <h1 class="text-6xl md:text-7xl text-pink-500 mb-4 drop-shadow-lg animate-bounce">
+      🎉 Rey is Turning ONE! 🎉
+    </h1>
+    <p class="text-lg md:text-xl text-gray-700 mb-6 italic">
+      Come celebrate a joyful day filled with giggles, cake, and magical memories! 💖
+    </p>
+
+    <!-- Photo placeholder -->
+    <div class="hero-photo w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden shadow-xl border-4 border-pink-400 bg-white mb-8">
+      <img src="rey.jpg" alt="Rey" class="w-full h-full object-cover"/>
+    </div>
+
+    <!-- Event Details -->
+    <div class="event-details bg-gradient-to-r from-pink-100 via-purple-100 to-yellow-100 shadow-xl rounded-2xl p-6 w-full">
+      <p class="text-2xl font-semibold text-pink-600 mb-2">📅 Date & Time</p>
+      <p class="text-gray-800 mb-4">Saturday, 18th October 2025 • 1:00 PM</p>
+      <p class="text-2xl font-semibold text-pink-600 mb-2">📍 Venue</p>
+      <p class="text-gray-800">Bimba Cafe, SS2</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 py-6 text-gray-600 text-sm">
+    Made with ❤️ to celebrate Rey’s very first birthday!
+  </footer>
+
+  <script>
+    const colors = ["#ff69b4", "#ffcc00", "#00c3ff", "#9b59b6", "#2ecc71"];
+
+    // Balloons
+    const balloonsContainer = document.getElementById("balloons");
+    for (let i = 0; i < 12; i++) {
+      let b = document.createElement("div");
+      b.classList.add("balloon");
+      b.style.left = Math.random() * 100 + "vw";
+      b.style.setProperty("--color", colors[Math.floor(Math.random() * colors.length)]);
+
+      // Assign separate durations for floatUp and drift
+      const floatDuration = 12 + Math.random() * 6;
+      const driftDuration = 4 + Math.random() * 2;
+      b.style.animationDuration = `${floatDuration}s, ${driftDuration}s`;
+
+      const floatDelay = Math.random() * 5;
+      const driftDelay = Math.random() * 3;
+      b.style.animationDelay = `${floatDelay}s, ${driftDelay}s`;
+
+      balloonsContainer.appendChild(b);
+    }
+
+    // Confetti
+    const confettiContainer = document.getElementById("confetti");
+    for (let i = 0; i < 40; i++) {
+      let c = document.createElement("div");
+      c.classList.add("confetti");
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (3 + Math.random() * 4) + "s";
+      c.style.animationDelay = Math.random() * 5 + "s";
+      confettiContainer.appendChild(c);
+    }
+  </script>
+</body>
+</html>
